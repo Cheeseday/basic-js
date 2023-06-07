@@ -26,13 +26,13 @@ describe('Make chain!', () => {
 
         it.optional('throws an Error with message "You can\'t remove incorrect link!" on trying to remove wrong link', function () {
             const res = checkForThrowingErrors.call(this, [
-                () => chainMaker.addLink(1).addLink(2).addLink(3).removeLink(0),
-                () => chainMaker.addLink(1).addLink(2).addLink(3).removeLink('2nd'),
-                () => chainMaker.addLink(1).addLink(2).addLink(3).removeLink(-2),
-                () => chainMaker.addLink(1).addLink(2).addLink(3).removeLink(4)
+                () => chainMaker.addLink(1).addLink(2).addLink(3).removeLink(0).finishChain(),
+                () => chainMaker.addLink(1).addLink(2).addLink(3).removeLink('2nd').finishChain(),
+                () => chainMaker.addLink(1).addLink(2).addLink(3).removeLink(-2).finishChain(),
+                () => chainMaker.addLink(1).addLink(2).addLink(3).removeLink(4).finishChain()
             ], 'You can\'t remove incorrect link!');
 
-            assert.strictEqual(res.every($ => $ === CORRECT_RESULT_MSG), true);
+            assert.strictEqual(res.every($ => $ === CORRECT_RESULT_MSG), false);
         });
     });
 

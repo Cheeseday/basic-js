@@ -5,26 +5,39 @@ const { NotImplementedError } = require('../extensions/index.js');
  * 
  */
 const chainMaker = {
-  getLength() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
-  },
-  addLink(/* value */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
-  },
-  removeLink(/* position */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
-  },
-  reverseChain() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
-  },
-  finishChain() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
-  }
+    chain: [],
+    getLength() {
+        return this.chain.length;
+    },
+    addLink(value) {
+        if(value === undefined) {
+            this.chain.push(`(  )`);
+        } else if(value === null || value === NaN) {
+            this.chain.push(`( ${value} )`);
+        } else {
+            this.chain.push(`( ${value} )`);
+        }
+        //console.log(chainMaker.chain);
+        return this;
+    },
+    removeLink(position) {
+        const length = this.getLength();
+        //console.log(length);
+        if(!position || !Number.isInteger(position) || position > length || position < 1) {
+            throw new Error ("You can't remove incorrect link!");
+        }
+        this.chain.splice(position - 1, 1);
+        return this;
+    },
+    reverseChain() {
+        this.chain.reverse();
+        return this;
+    },
+    finishChain() {
+        let answer = this.chain.reduce((accum, current) => accum += `~~${current}`);
+        this.chain = [];
+        return answer;
+    }
 };
 
 module.exports = {
